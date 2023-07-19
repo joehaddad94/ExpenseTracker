@@ -12,7 +12,7 @@ function expensesRowElement(expense) {
 function amountRowElement(amount) {
     return `<td>
     <span class="edit">&#9998;</span>
-    <td><span class="text">${amount}</span>
+    <span class="text">${amount}</span>
     <input type="text" style="display: none;"/>
   </td>`
 }
@@ -85,13 +85,17 @@ function addExpense () {
 
 function calculateTotal() {
     let total = 0;
+
     $(".text").each(function () {
       const amountText = $(this).text();
       const amount = parseFloat(amountText);
+
       if (!isNaN(amount)) {
         total += amount;
+
       }
     });
+
     $("#total").text(total.toFixed(2));
   }
 
