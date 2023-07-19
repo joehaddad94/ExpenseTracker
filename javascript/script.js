@@ -36,11 +36,13 @@ function addExpense () {
     const amountItem = $(amountRowElement(amount.val()));
     expenseRow.append(amountItem);
     amount.val("");
+    calculateTotal()
 
      //remove expense
      expenseItem.find(".remove").click(function () {
         expenseItem.remove();
         amountItem.remove();
+        calculateTotal()
      })
 
      //edit expense
@@ -75,10 +77,23 @@ function addExpense () {
             text.text(input.val())
             text.show(200)
             input.hide(200)
+            calculateTotal()
           }
         })
       })
 }
+
+function calculateTotal() {
+    let total = 0;
+    $(".text").each(function () {
+      const amountText = $(this).text();
+      const amount = parseFloat(amountText);
+      if (!isNaN(amount)) {
+        total += amount;
+      }
+    });
+    $("#total").text(total.toFixed(2));
+  }
 
 $(document).ready (function () {
     const addBtn = $("#add-button");
