@@ -12,7 +12,6 @@ function expensesRowElement(expense) {
 function amountRowElement(amount) {
     return `<td>
     <span class="edit">&#9998;</span>
-    <span class="remove">&#128465</span>
     <td><span class="text">${amount}</span>
     <input type="text" style="display: none;"/>
   </td>`
@@ -30,17 +29,56 @@ function addExpense () {
     if (description.val().trim() === "" || amount.val().trim() === "") return;
 
     const expenseItem = $(expensesRowElement(description.val()));
+
     expenseRow.append(expenseItem);
     description.val("");
 
     const amountItem = $(amountRowElement(amount.val()));
     expenseRow.append(amountItem);
     amount.val("");
+
+     //remove expense
+     expenseItem.find(".remove").click(function () {
+        expenseItem.remove();
+        amountItem.remove();
+     })
+
+     //edit expense
+     expenseItem.find(".edit").click(function () {
+        const input = expenseItem.find("input");
+        const text = expenseItem.find(".text");
+    
+        input.val(text.text())
+        text.hide(200)
+        input.show(200).focus()
+    
+        input.keyup(function (event) {
+          if (event.keyCode === 13) {
+            text.text(input.val())
+            text.show(200)
+            input.hide(200)
+          }
+        })
+      })
+
+      //edit amount
+      amountItem.find(".edit").click(function () {
+        const input = amountItem.find("input");
+        const text = amountItem.find(".text");
+    
+        input.val(text.text())
+        text.hide(200)
+        input.show(200).focus()
+    
+        input.keyup(function (event) {
+          if (event.keyCode === 13) {
+            text.text(input.val())
+            text.show(200)
+            input.hide(200)
+          }
+        })
+      })
 }
-
-
-
-
 
 $(document).ready (function () {
     const addBtn = $("#add-button");
